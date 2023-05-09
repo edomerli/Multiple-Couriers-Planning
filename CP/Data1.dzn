@@ -12,3 +12,30 @@ D =[| 0, 3, 3, 6, 5, 6, 6, 2
     | 6, 7, 3, 6, 3, 0, 2, 4
     | 6, 7, 5, 6, 3, 2, 0, 4
     | 2, 3, 3, 4, 3, 4, 4, 0 |]
+    
+% ----------
+% [| 12 | 12 | 12 |]
+
+% [| 0 | 2 | 0 | 8 | 5 | 0 | 0 |]
+% [| 0 | 0 | 6 | 0 | 0 | 0 | 4 |]
+% [| 3 | 0 | 0 | 0 | 0 | 4 | 0 |]
+
+% [| 0 | 3 | 0 | 2 | 1 | 0 | 0 |]
+% [| 0 | 0 | 2 | 0 | 0 | 0 | 1 |]
+% [| 2 | 0 | 0 | 0 | 0 | 1 | 0 |]
+% ----------
+% ==========
+% %%%mzn-stat: failures=483
+% %%%mzn-stat: initTime=0.014
+% %%%mzn-stat: nodes=974
+% %%%mzn-stat: peakDepth=14
+% %%%mzn-stat: propagations=400274
+% %%%mzn-stat: propagators=1494
+% %%%mzn-stat: restarts=0
+% %%%mzn-stat: solutions=4
+% %%%mzn-stat: solveTime=0.023
+% %%%mzn-stat: variables=1078
+% %%%mzn-stat-end
+% %%%mzn-stat: nSolutions=4
+% %%%mzn-stat-end
+% Finished in 277msec.
