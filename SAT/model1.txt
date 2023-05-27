@@ -1,0 +1,58 @@
+======================inst01.dat======================
+This model obtained objective value: 16 after 0.9s
+This model obtained objective value: 14 after 1.3s
+inst01.dat -> (14, 1.7)
+
+======================inst02.dat======================
+This model obtained objective value: 504 after 9.5s
+This model obtained objective value: 426 after 15.2s
+This model obtained objective value: 331 after 20.9s
+This model obtained objective value: 295 after 26.6s
+This model obtained objective value: 270 after 32.4s
+This model obtained objective value: 254 after 39.0s
+This model obtained objective value: 226 after 45.6s
+inst02.dat -> (226, 111.0)
+
+======================inst03.dat======================
+This model obtained objective value: 18 after 1.7s
+This model obtained objective value: 16 after 2.7s
+This model obtained objective value: 14 after 3.6s
+This model obtained objective value: 12 after 4.3s
+inst03.dat -> (12, 5.1)
+
+======================inst04.dat======================
+This model obtained objective value: 240 after 14.8s
+This model obtained objective value: 220 after 23.4s
+inst04.dat -> (220, 300)
+
+======================inst05.dat======================
+This model obtained objective value: 206 after 0.4s
+inst05.dat -> (206, 0.6)
+
+======================inst06.dat======================
+This model obtained objective value: 370 after 7.5s
+This model obtained objective value: 324 after 12.1s
+This model obtained objective value: 322 after 16.7s
+inst06.dat -> (322, 38.4)
+
+======================inst07.dat======================
+This model obtained objective value: 524 after 36.3s
+This model obtained objective value: 493 after 59.2s
+This model obtained objective value: 476 after 81.3s
+This model obtained objective value: 454 after 99.8s
+This model obtained objective value: 424 after 126.9s
+This model obtained objective value: 409 after 146.0s
+This model obtained objective value: 402 after 164.3s
+This model obtained objective value: 350 after 187.6s
+This model obtained objective value: 340 after 209.3s
+This model obtained objective value: 339 after 296.0s
+inst07.dat -> (339, 300)
+
+======================inst08.dat======================
+This model obtained objective value: 227 after 14.1s
+This model obtained objective value: 220 after 25.0s
+This model obtained objective value: 186 after 35.5s
+inst08.dat -> (186, 300)
+
+======================inst09.dat======================
+This model obtained objective value: 481 after 31.7s
