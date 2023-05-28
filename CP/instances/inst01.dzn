@@ -1,0 +1,23 @@
+% [| 13 | 14 |]
+
+
+m = 2;
+l = [15, 10];
+
+n = 6;
+s = [3, 2, 6, 5, 4, 4];
+
+D =[| 0, 3, 4, 5, 6, 6, 2
+	| 3, 0, 1, 4, 5, 7, 3
+	| 4, 1, 0, 5, 6, 6, 4
+	| 4, 4, 5, 0, 3, 3, 2
+	| 6, 7, 8, 3, 0, 2, 4
+	| 6, 7, 8, 3, 2, 0, 4
+	| 2, 3, 4, 3, 4, 4, 0
+	|];
+
+
+% 'A' Solutions=9 with row value (couriers) symmetry breaking and available capacity condition
+% Finished in 279msec.
+% 'dist' Solutions=3
+% Finished in 333msec.

@@ -1,0 +1,25 @@
+% [| 160 | 206 |]
+
+
+m = 2;
+l = [18, 30];
+
+n = 3;
+s = [20, 17, 6];
+
+D =[| 0, 21, 86, 99
+	| 21, 0, 71, 80
+	| 92, 71, 0, 61
+	| 59, 80, 61, 0
+	|];
+
+
+% 'A' Solutions=1 without simmetry breaking
+% Finished in 250msec.
+% 'dist' Solutions=1
+% Finished in 280msec.
+
+% 'A' Solutions=1 with row value (couriers) symmetry breaking and available capacity condition
+% Finished in 340msec.
+% 'dist' Solutions=1
+% Finished in 267msec.
