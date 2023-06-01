@@ -1,4 +1,5 @@
-% [| 199 | 192 | 188 | 189 | 226 | 174 |]
+% obj = 226
+% [| 132 | 174 | 192 | 210 | 226 | 209 |]
 
 
 m = 6;
@@ -25,7 +26,10 @@ D =[| 0, 199, 119, 28, 179, 77, 145, 61, 123, 87
 % 'dist' Solutions=4
 % Finished in 5m 0s.
 
-% 'A' Solutions=2646 with row value (couriers) symmetry breaking and available capacity condition
+% 'A' Solutions=2646 with row value (couriers) symmetry breaking
 % Finished in 1s 195msec.
-% 'dist' Solutions=4
-% Finished in 8s 614msec.
+% 'dist' Solutions=2
+% Finished in 2s 955msec.
+
+% 'dist' Solutions=10 with row value (couriers) symmetry breaking & old_all_diff O
+% Finished in 1s 423msec.

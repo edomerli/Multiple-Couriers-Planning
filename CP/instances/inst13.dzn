@@ -1,4 +1,5 @@
-% [| 954 | 984 | 980 |]
+% obj = 884
+% [| 880 | 878 | 884 |]
 
 
 m = 3;
@@ -63,7 +64,7 @@ D =[| 0, 60, 141, 22, 41, 137, 77, 48, 92, 105, 113, 103, 82, 15, 79, 24, 98, 69
 % 'dist' Solutions=12
 % Finished in 5m 0s.
 
-% 'A' Solutions=228073 with row value (couriers) symmetry breaking and available capacity condition
+% 'A' Solutions=228073 
 % Finished in 2m 0s.
-% 'dist' Solutions=19
+% 'dist' Solutions=43 with symmetry breaking & restart & LNS
 % Finished in 5m 0s.

@@ -1,4 +1,5 @@
-% [| 220 | 126 | 150 | 76 | 109 | 110 | 101 | 140 |]
+% obj = 220
+% [| 80 | 34 | 220 | 126 | 150 | 76 | 219 | 133 |]
 
 
 m = 8;
@@ -26,7 +27,10 @@ D =[| 0, 56, 86, 77, 81, 128, 107, 154, 70, 93, 53
 % 'dist' Solutions=1
 % Finished in 5m 0s.
 
-% 'A' Solutions=750 with row value (couriers) symmetry breaking and available capacity condition
+% 'A' Solutions=750 with row value (couriers) symmetry breaking
 % Finished in 907msec.
 % 'dist' Solutions=1
-% Finished in 2m 1s.
+% Finished in 1m 22s.
+
+% 'dist' Solutions=5 with row value (couriers) symmetry breaking & old_all_diff O
+% Finished in 2s 26msec.

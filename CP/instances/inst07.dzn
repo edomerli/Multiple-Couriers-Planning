@@ -1,4 +1,5 @@
-% [| 150 | 140 | 171 | 123 | 167 | 158 |]
+% obj = 167
+% [| 166 | 168 | 150 | 161 | 167 | 123 |]
 
 m = 6;
 l = [190, 185, 185, 190, 195, 185];
@@ -29,10 +30,13 @@ D =[| 0, 20, 19, 28, 58, 48, 45, 32, 90, 61, 71, 59, 65, 46, 72, 51, 46, 66
 
 % 'A' Solutions=(exp. >>400M) without simmetry breaking
 % Finished in 
-% 'dist' Solutions=11 (same obj=171)
+% 'dist' Solutions=11 (obj=171)
 % Finished in 5m 0s.
 
-% 'A' Solutions=549910 with row value (couriers) symmetry breaking and available capacity condition
+% 'A' Solutions=549910 with row value (couriers) symmetry breaking
 % Finished in 5m 0s.
-% 'dist' Solutions=10
+% 'dist' Solutions=10 (obj=171)
+% Finished in 5m 0s.
+
+% 'dist' Solutions=13 with row value (couriers) symmetry breaking & all_diff O
 % Finished in 5m 0s.
