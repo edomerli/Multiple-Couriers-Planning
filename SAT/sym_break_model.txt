@@ -1,0 +1,73 @@
+======================inst01.dat======================
+Encoding finished at time 0.9s, now start solving/optimization search
+This model obtained objective value: 18 after 0.9s
+This model obtained objective value: 16 after 0.9s
+This model obtained objective value: 15 after 0.9s
+This model obtained objective value: 14 after 1.0s
+inst01.dat -> (14, '1.2s')
+
+======================inst02.dat======================
+Encoding finished at time 20.7s, now start solving/optimization search
+This model obtained objective value: 515 after 21.8s
+This model obtained objective value: 267 after 22.1s
+This model obtained objective value: 245 after 22.3s
+This model obtained objective value: 226 after 26.1s
+inst02.dat -> (226, '52.1s')
+
+======================inst03.dat======================
+Encoding finished at time 2.3s, now start solving/optimization search
+This model obtained objective value: 18 after 2.4s
+This model obtained objective value: 16 after 2.7s
+This model obtained objective value: 14 after 2.8s
+This model obtained objective value: 12 after 3.0s
+inst03.dat -> (12, '3.3s')
+
+======================inst04.dat======================
+Encoding finished at time 41.8s, now start solving/optimization search
+This model obtained objective value: 227 after 48.5s
+This model obtained objective value: 220 after 49.1s
+inst04.dat -> (220, '277.1s')
+
+======================inst05.dat======================
+Encoding finished at time 0.3s, now start solving/optimization search
+This model obtained objective value: 252 after 0.3s
+This model obtained objective value: 206 after 0.4s
+inst05.dat -> (206, '0.4s')
+
+======================inst06.dat======================
+Encoding finished at time 13.7s, now start solving/optimization search
+This model obtained objective value: 322 after 14.2s
+inst06.dat -> (322, '22.3s')
+
+======================inst07.dat======================
+Encoding finished at time 64.4s, now start solving/optimization search
+This model obtained objective value: 291 after 70.0s
+This model obtained objective value: 243 after 106.0s
+This model obtained objective value: 237 after 146.1s
+This model obtained objective value: 236 after 263.6s
+inst07.dat -> (236, '300s -- TIMEOUT')
+
+======================inst08.dat======================
+Encoding finished at time 35.7s, now start solving/optimization search
+This model obtained objective value: 251 after 38.7s
+This model obtained objective value: 234 after 45.0s
+This model obtained objective value: 227 after 45.6s
+This model obtained objective value: 214 after 51.2s
+This model obtained objective value: 192 after 51.7s
+This model obtained objective value: 188 after 62.9s
+This model obtained objective value: 186 after 104.2s
+inst08.dat -> (186, '283.2s')
+
+======================inst09.dat======================
+Encoding finished at time 75.1s, now start solving/optimization search
+This model obtained objective value: 436 after 109.7s
+inst09.dat -> (436, '300s -- TIMEOUT')
+
+======================inst10.dat======================
+Encoding finished at time 64.4s, now start solving/optimization search
+This model obtained objective value: 270 after 79.7s
+This model obtained objective value: 253 after 105.5s
+This model obtained objective value: 245 after 230.1s
+inst10.dat -> (245, '300s -- TIMEOUT')
+
+======================inst11.dat======================
