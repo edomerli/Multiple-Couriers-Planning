@@ -36,14 +36,18 @@ constraint sum(l) >= sum(s); % total items size less than total couriers capacit
 % constraints to create A
 constraint 
     forall(i in COURIERS) (
-        sum(j in ITEMS) (A[i, j]) <= l[i] /\ % each courier respects its own load capacity
-        sum(j in ITEMS) (A[i, j]) > 0 % each courier transports at least one item
-    );
+        let {
+            array[ITEMS] of var int: assignment = [A[i, j] | j in ITEMS]
+        } in            
+        cumulative([1 | j in ITEMS], assignment, s, l[i]) /\ sum(assignment) > 0
+    ); % each courier transports at least one item and respects its own load capacity
 constraint 
     forall(j in ITEMS) (
-        max(i in COURIERS) (A[i, j]) == s[j] /\
-        sum(i in COURIERS) (A[i, j]) == s[j] % each item is carried by at most one courier
-    );
+        let {
+            array[COURIERS] of var int: assignment = [A[i, j] | i in COURIERS]
+        } in
+        distribute([1, m-1], [s[j], 0], assignment) 
+    ); % each item is carried by exactly one courier
 constraint
     forall(i,j in COURIERS where 
     i < j /\ l[i]-sum(k in ITEMS)(A[i,k]) > 0 /\ l[j]-sum(k in ITEMS)(A[j,k]) > 0) (
@@ -54,32 +58,42 @@ constraint
 constraint
     forall(i in COURIERS) (
         forall(j in ITEMS) (
-            (A[i, j] == 0 -> O[i, j] == 0) /\
-            (A[i, j] > 0 -> O[i, j] > 0) % each value is in line with those in A
+            if A[i, j] == 0 then O[i, j] = 0 else O[i, j] > 0 endif
         )
     );
 constraint
     forall(i in COURIERS) (
         let {
-            array[ITEMS] of var int: order = [O[i, j] | j in ITEMS];
-            var int: c = count(e in order) (e > 0);
-        } in 
-        alldifferent_except_0(order) /\ 
-        forall(e in 1..c) (count(order, e) == 1)
+            array[ITEMS] of var int: order_items = [O[i, j] | j in ITEMS];
+            var int: c = count(e in order_items) (e > 0)
+        } in
+        alldifferent_except_0(order_items) /\ 
+        forall(e in 1..c) (count(order_items, e) == 1)
     );
 
 % constraint to create dist
 constraint
     forall(i in COURIERS) (
         let {
-            array[ITEMS] of var int: order = [O[i, j] | j in ITEMS];
-            var int: c = count(e in order) (e > 0);
+            array[ITEMS] of var int: order_items = [O[i, j] | j in ITEMS];
+            var int: c = count(e in order_items) (e > 0)
         } in 
-        dist[i] == sum(j1 in ITEMS, j2 in ITEMS where 
-                   order[j1] != 0 /\ (order[j2] - order[j1]) == 1) (D[j1, j2])
-                 + sum(j0 in ITEMS where order[j0] == 1) (D[n+1, j0])
-                 + sum(jn in ITEMS where order[jn] == c) (D[jn, n+1])
+        dist[i] == sum(j1 in ITEMS, j2 in ITEMS where order_items[j1] != 0 /\ 
+                      (order_items[j2] - order_items[j1]) == 1) (D[j1, j2])
+                 + sum(j0 in ITEMS where order_items[j0] == 1) (D[n+1, j0])
+                 + sum(jn in ITEMS where order_items[jn] == c) (D[jn, n+1])
     );
+% constraint
+%     forall(i in COURIERS) (
+%         let {
+%             array[ITEMS] of var int: order_items = [O[i, j] | j in ITEMS];
+%             array[ITEMS] of var int: sorted_index = arg_sort(order_items);
+%             var int: first = sum(j in ITEMS where order_items[j] == 1)(sorted_index[order_items[j]])
+%         } in 
+%         dist[i] == D[order_items[sorted_index[n]], n+1]
+%                  + D[n+1, sorted_index[first]]
+%                  + sum(j in first..n-1)(D[sorted_index[j], sorted_index[j+1]])
+%     );
 
 %-----------------------------------------------------------------------------%
 % Objective
@@ -96,9 +110,9 @@ var float: objective = obj + (0.1*obj_2);
 
 % LNS on top of RESTART on top of DOMWDEG + MIN SEARCH
 solve :: int_search(O, dom_w_deg, indomain_min, complete) 
-      :: restart_luby(100)
-      :: relax_and_reconstruct(array1d(A), 85)
-         minimize objective;
+%       :: restart_luby(100)
+%       :: relax_and_reconstruct(array1d(A), 85)
+         minimize obj;
 
 %-----------------------------------------------------------------------------%
 % Output

@@ -65,10 +65,15 @@ constraint
         + sum(j0 in ITEMS where A[i, j0] != 0) (D[j0, n+1] * (O[i, j0] == c))
     );
 
+
 %% OBJECTIVE
 
 var int: obj = max(i in COURIERS)(dist[i]); 
 solve minimize obj;
+
+% var int: obj_m = max(i in COURIERS)(dist[i]);
+% var int: obj_s = sum(i in COURIERS)(dist[i]); 
+% solve minimize (2*m * obj_m) + obj_s;
 
 
 %% OUTPUT

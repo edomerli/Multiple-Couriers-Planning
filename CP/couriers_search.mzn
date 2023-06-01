@@ -66,58 +66,55 @@ constraint
 %         [A[j,i] | i in ITEMS, j in COURIERS]);
 
 % % constraints to create O
-% constraint
-%     forall(i in COURIERS) (
-%         forall(j in ITEMS) (
-%             (A[i, j] == 0 -> O[i, j] == 0) /\
-%             (A[i, j] > 0 -> O[i, j] > 0) % each value is in line with those in A
-%         )
-%     );
-% constraint 
-%     forall(i in COURIERS) ( 
-%         let {array[ITEMS] of var int: row = [O[i, j] | j in ITEMS];} in
-%         let {var int: c = count(e in row) (e > 0);} in
-%         forall(e in 1..c) (
-%             count([row[j] | j in ITEMS], e) == 1
-%         )
-%     );
+constraint
+    forall(i in COURIERS) (
+        forall(j in ITEMS) (
+            (A[i, j] == 0 -> O[i, j] == 0) /\
+            (A[i, j] > 0 -> O[i, j] > 0) % each value is in line with those in A
+        )
+    );
+constraint 
+    forall(i in COURIERS) ( 
+        let {array[ITEMS] of var int: row = [O[i, j] | j in ITEMS];} in
+        let {var int: c = count(e in row) (e > 0);} in
+        forall(e in 1..c) (
+            count([row[j] | j in ITEMS], e) == 1
+        )
+    );
 
 % % constraint to create dist
-% constraint
-%     forall(i in COURIERS) (
-%         let {array[ITEMS] of var int: row = [O[i, j] | j in ITEMS];} in
-%         let {var int: c = count(e in row) (e > 0);} in
-%         dist[i] == sum(j1 in ITEMS, j2 in ITEMS where (A[i, j1] != 0 /\ A[i, j2] != 0))
-%                    (D[j1, j2] * ((O[i, j2] - O[i, j1]) == 1))
-%         + sum(j0 in ITEMS where A[i, j0] != 0) (D[n+1, j0] * (O[i, j0] == 1))
-%         + sum(j0 in ITEMS where A[i, j0] != 0) (D[j0, n+1] * (O[i, j0] == c))
-%     );
+constraint
+    forall(i in COURIERS) (
+        let {array[ITEMS] of var int: row = [O[i, j] | j in ITEMS];} in
+        let {var int: c = count(e in row) (e > 0);} in
+        dist[i] == sum(j1 in ITEMS, j2 in ITEMS where (A[i, j1] != 0 /\ A[i, j2] != 0))
+                   (D[j1, j2] * ((O[i, j2] - O[i, j1]) == 1))
+        + sum(j0 in ITEMS where A[i, j0] != 0) (D[n+1, j0] * (O[i, j0] == 1))
+        + sum(j0 in ITEMS where A[i, j0] != 0) (D[j0, n+1] * (O[i, j0] == c))
+    );
 
 %-----------------------------------------------------------------------------%
 % Objective
 %-----------------------------------------------------------------------------%
 
-solve satisfy;
+% solve satisfy;
 
-% var int: obj = max(i in COURIERS)(dist[i]);
+var int: obj = max(i in COURIERS)(dist[i]);
 
-% (search 1) DEFAULT SEARCH
+% DEFAULT SEARCH
 % solve minimize obj;
 
-% (search 2) DOMWDEG + MIN SEARCH
-% solve :: int_search(O, dom_w_deg, indomain_min, complete) minimize obj;
-
-% (search 3) RESTARTING SEARCH on top of DOMWDEG + MIN
-% solve :: int_search(O, dom_w_deg, indomain_min, complete)
-%       :: restart_luby(250)
-%       minimize obj;
+solve :: int_search(O, dom_w_deg, indomain_min, complete) 
+      :: restart_luby(100)
+      :: relax_and_reconstruct(array1d(A), 85)
+         minimize obj;
 
 %-----------------------------------------------------------------------------%
 % Output
 %-----------------------------------------------------------------------------%
 
-% output  ["[| " ++ join (" | ", [show(dist[i]) | i in COURIERS]) ++ " |]" ++ "\n\n"]
+output  [show(obj) ++ "\n"]
+     ++ ["[| " ++ join (" | ", [show(dist[i]) | i in COURIERS]) ++ " |]" ++ "\n\n"]
 %      ++ ["[| " ++ join (" | ", [show(A[i,j]) | j in ITEMS]) ++ " |]" ++ "\n" | i in COURIERS] ++ ["\n"]
 %      ++ ["[| " ++ join (" | ", [show(O[i,j]) | j in ITEMS]) ++ " |]" ++ "\n" | i in COURIERS] ++ ["\n"]
-%         ;
-output ["[| " ++ join (" | ", [show(A[i,j]) | j in ITEMS]) ++ " |]" ++ "\n" | i in COURIERS];
+        ;
