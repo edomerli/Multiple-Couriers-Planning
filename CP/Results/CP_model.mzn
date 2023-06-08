@@ -95,8 +95,8 @@ var float: objective = obj + (0.1*obj__);
 
 solve :: int_search(O, dom_w_deg, indomain_min, complete) 
 %-----------COMMENT TO REMOVE LNS and RESTART-----------%
-      :: restart_luby(100)
-      :: relax_and_reconstruct(array1d(A), 85)
+%       :: restart_luby(100)
+%       :: relax_and_reconstruct(array1d(A), 85)
 %-----------COMMENT TO REMOVE LNS and RESTART-----------%
          minimize obj;
 %          minimize objective;
