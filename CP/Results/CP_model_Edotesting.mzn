@@ -15,17 +15,22 @@ array[ITEMS] of int: s; % items sizes
 
 set of int: D_SIZE = 1..n+1;
 array[D_SIZE, D_SIZE] of int: D; % distances
+int: dist_lowerbound = min(i in ITEMS)(D[n+1,i] + D[i,n+1]);
+int: dist_upperbound = sum(i in ITEMS)(max(j in ITEMS)(D[j,i]));
 
 %-----------------------------------------------------------------------------%
 % Variables
 %-----------------------------------------------------------------------------%
 
 % assignment of items to each courier
-array[COURIERS, ITEMS] of var 0..max(s): A;
+% array[COURIERS, ITEMS] of var 0..max(s): A;
+% TODO: try with A binary
+array[COURIERS, ITEMS] of var 0..1: A;
 % order of items for each courier
 array[COURIERS, ITEMS] of var 0..n: O;
 % distance travelled by each courier
-array[COURIERS] of var 1..sum(D): dist;
+% TODO: can restrict dist considerably
+array[COURIERS] of var dist_lowerbound..dist_upperbound: dist;
 
 %-----------------------------------------------------------------------------%
 % Constraints
@@ -36,19 +41,26 @@ constraint sum(l) >= sum(s); % total items size less than total couriers capacit
 % constraints to create A
 constraint 
     forall(i in COURIERS) (
-        sum(j in ITEMS)(A[i, j]) <= l[i] /\ % each courier respects its own load capacity
-        sum(j in ITEMS)(A[i, j]) > 0 % each courier transports at least one item
+        sum(j in ITEMS where A[i, j] == 1)(s[j]) <= l[i] /\ % each courier respects its own load capacity
+        count(z in A[i,..])(z==1) > 0 % each courier transports at least one item
     );
-constraint 
+
+constraint
     forall(j in ITEMS) (
-        max(i in COURIERS)(A[i, j]) == s[j] /\
-        sum(i in COURIERS)(A[i, j]) == s[j] % each item is carried by at most one courier
+        count(z in A[..,j])(z==1) > 0
     );
+% TODO: remove
+% constraint 
+%     forall(j in ITEMS) (
+%         max(i in COURIERS)(A[i, j]) == s[j] /\
+%         sum(i in COURIERS)(A[i, j]) == s[j] % each item is carried by at most one courier
+%     );
     
 %----------COMMENT TO REMOVE SYMMETRY BREAKING----------%
+% TODO: double check
 constraint
     forall(i,j in COURIERS where i < j /\ 
-    l[i]-sum(k in ITEMS)(A[i,k]) > 0 /\ l[j]-sum(k in ITEMS)(A[j,k]) > 0) (
+    l[i]-sum(k in ITEMS where A[i,k] == 1)(s[k]) > 0 /\ l[j]-sum(k in ITEMS where A[j,k] == 1)(s[k]) > 0) (
         lex_lesseq([A[i,k] | k in ITEMS], [A[j,k] | k in ITEMS])
     ); % row value symmetry breaking with available capacity condition
 %----------COMMENT TO REMOVE SYMMETRY BREAKING----------%
