@@ -1,0 +1,26 @@
+{
+    "Gecode_complete": {
+        "time": 0,
+        "optimal": true,
+        "obj": 226,
+        "sol": [[6, 8], [5, 7], [4], [3, 9], [2], [1]]
+    },
+    "Gecode_no_LNS": {
+        "time": 0,
+        "optimal": true,
+        "obj": 226,
+        "sol": [[6, 8], [5], [4], [3, 9], [2, 7], [1]]
+    },
+    "Gecode_no_sym_break": {
+        "time": 0,
+        "optimal": true,
+        "obj": 226,
+        "sol": [[6], [5], [1, 4], [3, 9], [8], [2, 7]]
+    },
+    "Chuffed_complete": {
+        "time": 0,
+        "optimal": true,
+        "obj": 226,
+        "sol": [[8], [7], [6], [5, 9], [3, 2], [1, 4]]
+    }
+}

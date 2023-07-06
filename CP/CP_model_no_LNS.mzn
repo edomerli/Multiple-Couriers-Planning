@@ -30,8 +30,6 @@ array[COURIERS, ITEMS] of var 0..n: O;
 % Constraints
 %-----------------------------------------------------------------------------%
 
-% constraint sum(l) >= sum(s); % total items size less than total couriers capacity
-
 constraint 
     forall(i in COURIERS) (
         sum(j in ITEMS where A[i,j] == 1)(s[j]) <= l[i] %/\
@@ -44,11 +42,11 @@ constraint
     );
     
 %----------COMMENT TO REMOVE SYMMETRY BREAKING----------%
-% constraint
-%     forall(i,j in COURIERS where i < j)(
-%         (sum(k in ITEMS where A[i,k] == 1)(s[k]) <= l[j] /\ sum(k in ITEMS where A[j,k] == 1)(s[k]) <= l[i])
-%         -> lex_lesseq(A[i,..], A[j,..])
-%     );
+constraint
+    forall(i,j in COURIERS where i < j)(
+        (sum(k in ITEMS where A[i,k] == 1)(s[k]) <= l[j] /\ sum(k in ITEMS where A[j,k] == 1)(s[k]) <= l[i])
+        -> lex_lesseq(A[i,..], A[j,..])
+    );
 %----------COMMENT TO REMOVE SYMMETRY BREAKING----------%
 
 % constraints to create O
@@ -64,10 +62,11 @@ constraint
     forall(i in COURIERS) ( 
         let {var int: c = count(e in A[i,..]) (e == 1);} in
         forall(e in 1..c) (
-            count([O[i,j] | j in ITEMS], e) == 1
+            count(O[i,..], e) == 1
         )
     );
-    
+
+
 %-----------------------------------------------------------------------------%
 % Objective
 %-----------------------------------------------------------------------------%
@@ -88,8 +87,8 @@ var obj_lowerbound..obj_upperbound: obj = max(i in COURIERS)(sum(j1 in ITEMS, j2
 %-----------------------------------------------------------------------------%
 solve :: int_search(O, dom_w_deg, indomain_min) 
 %-----------COMMENT TO REMOVE LNS and RESTART-----------%
-      :: restart_luby(100)
-      :: relax_and_reconstruct(array1d(A), 85)
+%       :: restart_luby(100)
+%       :: relax_and_reconstruct(array1d(A), 85)
 %-----------COMMENT TO REMOVE LNS and RESTART-----------%
          minimize obj;
 
@@ -97,5 +96,6 @@ solve :: int_search(O, dom_w_deg, indomain_min)
 % Output
 %-----------------------------------------------------------------------------%
 
-output  [show(obj) ++ "\n"];
-        
+output  [show(obj) ++ "\n"] ++
+        [show(O[i,j]) ++ if j == n then "\n" else " " endif | i in COURIERS, j in ITEMS]
+                
