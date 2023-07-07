@@ -11,8 +11,10 @@ import json
 import jsbeautifier
 
 
-models = [("Gecode_complete", "CP_model.mzn"), ("Gecode_no_LNS", "CP_model_no_LNS.mzn"), ("Gecode_no_sym_break", "CP_model_no_sym_break.mzn"), ("Chuffed_complete", "CP_model_chuffed.mzn")]
+models = [ ("Gecode_no_LNS", "CP_model_no_LNS.mzn")]#, ("Gecode_no_sym_break", "CP_model_no_sym_break.mzn"), ("Chuffed_complete", "CP_model_chuffed.mzn")]
 
+
+# TODO: re-add ("Gecode_complete", "CP_model.mzn"), and all the others
 def minizinc_output_to_dict(text):
     """Read the output from the execution of minizinc and return a dictionary with the structure of the required 
        JSON file (i.e. with fields 'time', 'optimal', 'obj', 'sol')
@@ -22,6 +24,9 @@ def minizinc_output_to_dict(text):
     """
     if "=UNKNOWN=" in text:
         return {"time": 300, "optimal": False, "obj": "N/A"}
+
+    if "=ERROR=" in text:
+        return {"time": 300, "optimal": False, "obj": "Error"}
 
     if "=UNSAT=" in text:
         obj_value = "UNSAT"
@@ -36,18 +41,25 @@ def minizinc_output_to_dict(text):
         rest = text.partition('\n')[2]
         orders = np.genfromtxt(io.StringIO(rest.split('%')[0]), dtype=int).tolist()
 
+        n = len(orders[0])
         sol = []
 
         for row in orders:
-            route = [-1] * sum(x > 0 for x in row)
-            for j in range(len(row)):
-                if row[j] > 0:
-                    route[row[j]-1] = j+1
+            route = []
+            if row[n-1] == n:    # courier doesn't leave origin
+                pass 
+            else:
+                v = row[n-1]
+                while v != n:
+                    route.append(v)
+                    v = row[v-1]
+                
             sol.append(route)
-
+        
     # time
-    time = float(re.findall("time elapsed: (\d+\.\d+)", text)[0])
+    time = float(re.findall("time elapsed: (\d+\.\d+)", text)[0])   # TODO: capire se voglio il primo o secondo time (prova su istanze grandi)
     time = math.floor(time)
+
 
     # optimal
     if time >= 300:

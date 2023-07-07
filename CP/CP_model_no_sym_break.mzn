@@ -20,10 +20,8 @@ array[D_SIZE, D_SIZE] of int: D; % distances
 % Variables
 %-----------------------------------------------------------------------------%
 
-% assignment of items to each courier
-array[COURIERS, ITEMS] of var 0..1: A;
 % order of items for each courier
-array[COURIERS, ITEMS] of var 0..n: O;
+array[COURIERS, D_SIZE] of var D_SIZE: T;
 
 
 %-----------------------------------------------------------------------------%
@@ -32,38 +30,21 @@ array[COURIERS, ITEMS] of var 0..n: O;
 
 constraint 
     forall(i in COURIERS) (
-        sum(j in ITEMS where A[i,j] == 1)(s[j]) <= l[i] %/\
-        /\ count(z in A[i,..])(z==1) > 0 % each courier transports at least one item, implied constraint
+        sum(j in ITEMS where T[i,j] != j)(s[j]) <= l[i]    % load capacities are respected
+%         /\ ((count(j in ITEMS)(T[i,j] != j) > 0) -> (T[i,n+1] != n+1))  % if courier delivers items then the node origin must be
+                                                                        % present in the subcircuit (complementary of implied c.)
+        /\ T[i,n+1] != n+1    % implied constraint
     );
 
 constraint
     forall(j in ITEMS) (
-        count(z in A[..,j])(z==1) == 1 % each item is transported by exactly one courier
-    );
-    
-%----------COMMENT TO REMOVE SYMMETRY BREAKING----------%
-% constraint
-%     forall(i,j in COURIERS where i < j)(
-%         (sum(k in ITEMS where A[i,k] == 1)(s[k]) <= l[j] /\ sum(k in ITEMS where A[j,k] == 1)(s[k]) <= l[i])
-%         -> lex_lesseq(A[i,..], A[j,..])
-%     );
-%----------COMMENT TO REMOVE SYMMETRY BREAKING----------%
-
-% constraints to create O
-constraint
-    forall(i in COURIERS) (
-        forall(j in ITEMS) (
-            (A[i, j] == 0 <-> O[i, j] == 0) /\
-            (A[i, j] == 1 <-> O[i, j] > 0) % each value is in line with those in A
-        )
+        count(z in T[..,j])(z != j) == 1 % each item is transported by exactly one courier
     );
 
+% constraints to create T as a set of Hamiltonian sub-cycles (or sub-circuits)
 constraint 
-    forall(i in COURIERS) ( 
-        let {var int: c = count(e in A[i,..]) (e == 1);} in
-        forall(e in 1..c) (
-            count(O[i,..], e) == 1
-        )
+    forall(i in COURIERS) (
+        subcircuit(T[i,..])
     );
 
 
@@ -75,20 +56,17 @@ int: obj_lowerbound = max(i in ITEMS)(D[n+1,i] + D[i,n+1]);
 
 array[D_SIZE] of int: max_dists = sort([max(j in D_SIZE)(D[i,j]) | i in D_SIZE]);
 int: obj_upperbound = sum(i in m..n+1)(max_dists[i]);
-
-var obj_lowerbound..obj_upperbound: obj = max(i in COURIERS)(sum(j1 in ITEMS, j2 in ITEMS where 
-        (A[i, j1] = 1 /\ A[i, j2] = 1 /\ O[i, j2] - O[i, j1] == 1)) (D[j1,j2])
-        + sum(j0 in ITEMS where O[i, j0] == 1) (D[n+1, j0])
-        + sum(j0 in ITEMS where O[i, j0] == count(e in A[i,..])(e==1)) (D[j0, n+1]));
+        
+var obj_lowerbound..obj_upperbound: obj = max(i in COURIERS)(sum(j in D_SIZE where T[i,j] != j) (D[j,T[i,j]]));
 
 
 %-----------------------------------------------------------------------------%
 % Search Strategy
 %-----------------------------------------------------------------------------%
-solve :: int_search(O, dom_w_deg, indomain_min) 
+solve :: int_search(T, dom_w_deg, indomain_min) 
 %-----------COMMENT TO REMOVE LNS and RESTART-----------%
       :: restart_luby(100)
-      :: relax_and_reconstruct(array1d(A), 85)
+      :: relax_and_reconstruct(array1d(T), 85)
 %-----------COMMENT TO REMOVE LNS and RESTART-----------%
          minimize obj;
 
@@ -97,5 +75,4 @@ solve :: int_search(O, dom_w_deg, indomain_min)
 %-----------------------------------------------------------------------------%
 
 output  [show(obj) ++ "\n"] ++
-        [show(O[i,j]) ++ if j == n then "\n" else " " endif | i in COURIERS, j in ITEMS]
-        
+        [show(T[i,j]) ++ if j == n+1 then "\n" else " " endif | i in COURIERS, j in D_SIZE]
