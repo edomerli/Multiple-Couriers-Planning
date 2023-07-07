@@ -1,4 +1,4 @@
-from utils import *
+from .utils import *
 
 def displayMCP(orders, distances_bin, obj_value, assignments):
     """Function to display a found solution of the Multiple Couriers Planning problem

@@ -2,11 +2,11 @@ import time
 
 from z3 import *
 
-from utils import *
-from encodings_numbers import *
-from encodings_obj_function import *
-from hamiltonian import *
-from display import *
+from .utils import *
+from .encodings_numbers import *
+from .encodings_obj_function import *
+from .hamiltonian import *
+from .display import *
 
 
 def multiple_couriers_planning_sequential(m, n, l, s, D, symmetry_breaking=True, search='Binary', display_solution=True, timeout_duration=300):

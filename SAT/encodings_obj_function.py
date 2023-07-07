@@ -1,7 +1,7 @@
 from z3 import * 
 
-from utils import *
-from encodings_numbers import *
+from .utils import *
+from .encodings_numbers import *
 
 
 def obj_function(model, distances):

@@ -10,14 +10,16 @@ import re
 import json
 import jsbeautifier
 
-from testing import *
-from model import *
-from model_sequential import *
+from .testing import *
+from .model import *
+from .model_sequential import *
 
 
 models = [("sequential", multiple_couriers_planning_sequential),
           ("sequential_no_sym_break", multiple_couriers_planning_sequential)]
 
+def run_sat(a, b):
+    print("INSIDE SAT")
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:

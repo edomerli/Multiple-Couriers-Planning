@@ -1,6 +1,6 @@
 from z3 import *
 
-from encodings_logic import *
+from .encodings_logic import *
 
 
 def leq_same_digits(v, u, digits):
