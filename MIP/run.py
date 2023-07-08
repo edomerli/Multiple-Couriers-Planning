@@ -145,18 +145,17 @@ def run_mip(instance_file):
         model_dict = run_model_on_instance(model, instance_file, solver, symmetry_breaking=sym_break, implied_constraint=implied_constr)
 
         # suppress solver output
-        # old_stdout = sys.stdout
-        # sys.stdout = open(os.devnull, 'w')
-        # try:
-        #     model_dict = run_model_on_instance(model, instance_file, solver, symmetry_breaking=sym_break, implied_constraint=implied_constr)
-        # except:
-        #     print("There was an exception while running the model/retrieving solution")
-        # finally:
-        #     pass
-            # sys.stdout = old_stdout
+        old_stdout = sys.stdout
+        sys.stdout = open(os.devnull, 'w')
+        try:
+            model_dict = run_model_on_instance(model, instance_file, solver, symmetry_breaking=sym_break, implied_constraint=implied_constr)
+        except:
+            sys.stdout = old_stdout
+            print("There was an exception while running the model/retrieving solution")
+            exit(1)
+        finally:
+            sys.stdout = old_stdout
 
         dictionary[model_name] = model_dict
-
-    print(dictionary)
 
     return dictionary

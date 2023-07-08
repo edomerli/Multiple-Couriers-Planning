@@ -1,0 +1,50 @@
+{
+    "highs": {
+        "time": 0,
+        "optimal": true,
+        "obj": 322,
+        "sol": [[6], [3], [8], [1, 5, 4], [2], [7]]
+    },
+    "highs_no_sym_break": {
+        "time": 0,
+        "optimal": true,
+        "obj": 322,
+        "sol": [[1, 5, 4], [2], [8], [6], [7], [3]]
+    },
+    "highs_no_implied": {
+        "time": 0,
+        "optimal": true,
+        "obj": 322,
+        "sol": [[5], [8], [2], [1, 4], [3, 6], [7]]
+    },
+    "cbc": {
+        "time": 1,
+        "optimal": true,
+        "obj": 322,
+        "sol": [[1], [6], [8], [3, 7, 2], [4], [5]]
+    },
+    "gurobi": {
+        "time": 0,
+        "optimal": true,
+        "obj": 322,
+        "sol": [[8], [1], [3], [7, 5, 4], [2], [6]]
+    },
+    "gurobi_no_sym_break": {
+        "time": 0,
+        "optimal": true,
+        "obj": 322,
+        "sol": [[3, 4, 1], [8], [5], [7], [2], [6]]
+    },
+    "gurobi_no_implied": {
+        "time": 0,
+        "optimal": true,
+        "obj": 322,
+        "sol": [[8], [6], [], [2, 1, 5, 4], [7, 3], []]
+    },
+    "cplex": {
+        "time": 0,
+        "optimal": true,
+        "obj": 322,
+        "sol": [[2], [6], [3], [1, 5], [8, 7], [4]]
+    }
+}
