@@ -136,8 +136,8 @@ def multiple_couriers_planning(m, n, l, s, D, symmetry_breaking=True, implied_co
     # distances[i] := binary representation of the distance travelled by courier i
     # Take as upper bound the greater n-(m-1) maximum distances, since that's the maximum items a single courier can be assigned to
     max_distances = [max(D[i]) for i in range(n+1)]
-    max_distances.sort()
     if implied_constraint:
+        max_distances.sort()
         upper_bound = sum(max_distances[m-1:])
     else:
         upper_bound = sum(max_distances)

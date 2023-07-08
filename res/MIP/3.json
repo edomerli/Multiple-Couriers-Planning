@@ -1,44 +1,44 @@
 {
-    "base": {
+    "highs_complete": {
         "time": 0,
         "optimal": true,
         "obj": 12,
-        "sol": [[5, 6, 3], [4, 2], [1, 7]]
+        "sol": [[2, 5, 4], [1, 3], [6, 0]]
     },
-    "base_no_sym_break": {
+    "highs_no_sym_break": {
         "time": 0,
         "optimal": true,
         "obj": 12,
-        "sol": [[5, 6, 3], [4, 2], [1, 7]]
+        "sol": [[2, 5, 4], [1, 3], [6, 0]]
     },
-    "base_no_implied": {
+    "highs_no_implied": {
         "time": 0,
         "optimal": true,
         "obj": 12,
-        "sol": [[5, 4, 2], [6, 3], [1, 7]]
+        "sol": [[2, 5, 4], [1, 3], [6, 0]]
     },
-    "base_linear": {
+    "cbc_complete": {
         "time": 0,
         "optimal": true,
         "obj": 12,
-        "sol": [[5, 4, 2], [7, 3], [1, 6]]
+        "sol": [[2, 5, 4], [1, 3], [0, 6]]
     },
-    "sequential": {
+    "gurobi_complete": {
         "time": 0,
         "optimal": true,
         "obj": 12,
-        "sol": [[5, 4, 2], [3, 6], [1, 7]]
+        "sol": [[4, 3, 1], [2, 6], [5, 0]]
     },
-    "sequential_no_sym_break": {
+    "gurobi_no_sym_break": {
         "time": 0,
         "optimal": true,
         "obj": 12,
-        "sol": [[5, 6, 3], [2, 4], [1, 7]]
+        "sol": [[4, 3, 1], [2, 6], [5, 0]]
     },
-    "sequential_no_implied": {
+    "gurobi_no_implied": {
         "time": 0,
         "optimal": true,
         "obj": 12,
-        "sol": [[3, 6, 5], [2, 4], [1, 7]]
+        "sol": [[4, 3, 1], [5, 2], [6, 0]]
     }
 }

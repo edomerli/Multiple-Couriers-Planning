@@ -9,7 +9,7 @@ from .hamiltonian import *
 from .display import *
 
 
-def multiple_couriers_planning_sequential(m, n, l, s, D, symmetry_breaking=True, search='Binary', display_solution=True, timeout_duration=300):
+def multiple_couriers_planning_sequential(m, n, l, s, D, symmetry_breaking=True, implied_constraint=True, search='Binary', display_solution=True, timeout_duration=300):
     """Model 2 in Z3 for the Multiple Couriers Planning problem, with the same constraints of Model 1 but using 2 solvers: one to find the
        assignments and the other one to find the respective routes of each one, i.e. clearly separating the "cluster-first" and "order-second" phases
 
@@ -21,6 +21,7 @@ def multiple_couriers_planning_sequential(m, n, l, s, D, symmetry_breaking=True,
         D (list[list[int]]): (n+1)x(n+1) matrix, with D[i][j] representing the distance from
                              distribution point i to distribution point j
         symmetry_breaking (bool, optional): wether or not to use symmetry breaking constraints (default=True)
+        implied_constraint (bool, optional): wether or not to use implied constraint (default=True)
         search (str, optional) ['Linear']: the search strategy to use in the Optimization phase of solving. This model supports only linear search (default='Linear')
         display_solution (bool, optional): wether or not to print the final solution obtained, with the path travelled by each courier (default=True)
         timeout_duration (int, optional): timeout in seconds (default=300)
@@ -62,8 +63,11 @@ def multiple_couriers_planning_sequential(m, n, l, s, D, symmetry_breaking=True,
     # distances[i] := binary representation of the distance travelled by courier i
     # Take as upper bound the greater n-(m-1) maximum distances, since that's the maximum items a single courier can be assigned to
     max_distances = [max(D[i]) for i in range(n+1)]
-    max_distances.sort()
-    upper_bound = sum(max_distances[m-1:])
+    if implied_constraint:
+        max_distances.sort()
+        upper_bound = sum(max_distances[m-1:])
+    else:
+        upper_bound = sum(max_distances)
     lower_bound = max([D[n][j] + D[j][n] for j in range(n)])
 
 
@@ -101,8 +105,9 @@ def multiple_couriers_planning_sequential(m, n, l, s, D, symmetry_breaking=True,
             clauses.append(leq(courier_loads[i], l_bin[i]))
 
         # Constraint 3: every courier has at least 1 item to deliver (implied constraint, because n >= m and distance is quasimetric)
-        for i in range(m):
-            clauses.append(at_least_one(a[i]))
+        if implied_constraint:
+            for i in range(m):
+                clauses.append(at_least_one(a[i]))
 
         return And(clauses)
 
@@ -117,8 +122,9 @@ def multiple_couriers_planning_sequential(m, n, l, s, D, symmetry_breaking=True,
         # Constraint 5: routes
         for i in range(m):
             # Constraint 5.1: diagonal is full of zeros, i.e. can't leave from j to go to j
-            clauses.append(And([Not(r[i][j][j]) for j in range(n+1)]))
-
+            clauses.append(And([Not(r[i][j][j]) for j in range(n)]))
+            if implied_constraint:
+                clauses.append(Not(r[i][n][n]))     # don't let courier i have a self loop
             # Constraint 5.2: row j has a 1 iff courier i delivers object j
             # rows
             for j in range(n):
