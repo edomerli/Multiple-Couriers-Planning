@@ -5,20 +5,20 @@ import os
 
 from amplpy import AMPL, modules
 
-# from .testing import *
 from .models import *
 
 
-solvers = ["highs", "cbc", "gurobi", "cplex", "copt"]
+solvers = ["highs", "cbc", "gurobi", "cplex"]
 
-models = [("highs_complete", model_complete),
+models = [("highs", model_complete),
           ("highs_no_sym_break", model_no_sym_break),
           ("highs_no_implied", model_no_implied), 
-          ("cbc_complete", model_complete),
-          ("gurobi_complete", model_complete),
+          ("cbc", model_complete),
+          ("gurobi", model_complete),
           ("gurobi_no_sym_break", model_no_sym_break),
-          ("gurobi_no_implied", model_no_implied)
-          ] # TODO: add others
+          ("gurobi_no_implied", model_no_implied),
+          ("cplex", model_complete)
+          ]
 
 
 def run_model_on_instance(MCP_model, file, solver, symmetry_breaking=True, implied_constraint=True):
@@ -46,7 +46,6 @@ def run_model_on_instance(MCP_model, file, solver, symmetry_breaking=True, impli
         l, permutation = zip(*L)
         l = list(l)
         permutation = list(permutation)
-
 
     # flatten the adjacency matrix to a list in order to feed it to the model
     D = np.ravel(D_matrix).tolist()
