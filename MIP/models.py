@@ -141,7 +141,7 @@ model_no_implied = r"""
     param capacity {COURIERS} > 0 integer;
     param size {ITEMS} > 0 integer;
     param D {D_SIZE, D_SIZE} >= 0 integer; # matrix of distances
-    param obj_upper_bound := sum {i in D_SIZE} max {j in D_SIZE} D[i,j];
+    param obj_upper_bound := sum {i in D_SIZE} (max {j in D_SIZE} D[i,j]);
     param obj_lower_bound := max {i in ITEMS} (D[n+1,i]+D[i,n+1]);
 
 
@@ -182,7 +182,7 @@ model_no_implied = r"""
                                              # value of big-M = 2*n
     s.t. successive_visit_2 {i in COURIERS, j in ITEMS, k in ITEMS}:
         T[j]-T[k] <= 1 + 2*n * (1-X[i,k,j]);
-    
+
     ## symmetry breaking with ordered capacity 
     s.t. symmetry_breaking {i in {1..m-1}}:
         sum {j in ITEMS, k in ITEMS} X[i,j,k]*size[k] >= sum {j in ITEMS, k in ITEMS} X[i+1,j,k]*size[k]; # the load of each courier is ordered as the capacity       

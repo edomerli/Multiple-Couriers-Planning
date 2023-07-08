@@ -83,6 +83,16 @@ def run_model_on_instance(MCP_model, file, solver, symmetry_breaking=True, impli
     # Stop if the model was not solved
     solve_result = ampl.get_value("solve_result")
 
+    # time
+    time = math.floor(ampl.getValue('_total_solve_time'))
+
+    # optimal
+    if time >= 300:
+        optimal = False
+        time = 300
+    else:
+        optimal = True
+
     # get objective value
     obj_value = int(round(ampl.get_objective('Obj_function').value(), 0))
 
@@ -97,7 +107,7 @@ def run_model_on_instance(MCP_model, file, solver, symmetry_breaking=True, impli
     # reconstruct X
     X = [[[-1 for j in range(n+1)] for k in range(n+1)] for i in range(m)]
     for i, j, k, value in df:
-        i, j, k, value = int(i), int(j), int(k), int(value)
+        i, j, k, value = int(i), int(j), int(k), int(round(value, 0))
         if symmetry_breaking:
             # also reorder couriers w.r.t permutation
             X[permutation[i-1]][j-1][k-1] = value
@@ -117,16 +127,6 @@ def run_model_on_instance(MCP_model, file, solver, symmetry_breaking=True, impli
                 v = X[i][v].index(1)
         sol.append(route)
 
-    # time
-    time = math.floor(ampl.getValue('_total_solve_time'))
-
-    # optimal
-    if time >= 300:
-        optimal = False
-        time = 300
-    else:
-        optimal = True
-
     return {"time": time, "optimal": optimal, "obj":obj_value, "sol": sol}
 
 
@@ -139,21 +139,21 @@ def run_mip(instance_file):
     dictionary = {}
 
     for model_name, model in models:
-        # TODO: might not need to pass the params here! like CP
         sym_break = False if "no_sym_break" in model_name else True
         implied_constr = False if "no_implied" in model_name else True
         solver = model_name.split('_')[0]
+        model_dict = run_model_on_instance(model, instance_file, solver, symmetry_breaking=sym_break, implied_constraint=implied_constr)
 
         # suppress solver output
-        old_stdout = sys.stdout
-        sys.stdout = open(os.devnull, 'w')
-        try:
-            model_dict = run_model_on_instance(model, instance_file, solver, symmetry_breaking=sym_break, implied_constraint=implied_constr)
-        except:
-            print("There was an exception while running the model/retrieving solution")
-        finally:
-            pass
-            sys.stdout = old_stdout
+        # old_stdout = sys.stdout
+        # sys.stdout = open(os.devnull, 'w')
+        # try:
+        #     model_dict = run_model_on_instance(model, instance_file, solver, symmetry_breaking=sym_break, implied_constraint=implied_constr)
+        # except:
+        #     print("There was an exception while running the model/retrieving solution")
+        # finally:
+        #     pass
+            # sys.stdout = old_stdout
 
         dictionary[model_name] = model_dict
 
