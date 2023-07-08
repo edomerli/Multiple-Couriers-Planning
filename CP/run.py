@@ -24,7 +24,7 @@ def extract_solution(text):
     if "=ERROR=" in text:
         return {"time": 300, "optimal": False, "obj": "Error"}
 
-    if "=UNSAT=" in text:
+    if "=UNSATISFIABLE=" in text:
         obj_value = "UNSAT"
         sol = []
 

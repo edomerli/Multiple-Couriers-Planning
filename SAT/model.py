@@ -168,7 +168,6 @@ def multiple_couriers_planning(m, n, l, s, D, symmetry_breaking=True, implied_co
             obj_value = obj_function(model, distances)
             # print(f"This model obtained objective value: {obj_value} after {round(time.time() - encoding_time, 1)}s")
 
-
             if obj_value <= lower_bound:
                 break
 
