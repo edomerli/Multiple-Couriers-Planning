@@ -47,9 +47,12 @@ def multiple_couriers_planning_sequential(m, n, l, s, D, symmetry_breaking=True,
     # courier_loads_i = binary representation of actual load carried by each courier
 
     if symmetry_breaking:
-        # sort the list of loads
-        l.sort(reverse=True)
-
+        # sort the list of loads, keeping the permutation used for later
+        L = [(l[i], i) for i in range(m)]
+        L.sort(reverse=True)
+        l, permutation = zip(*L)
+        l = list(l)
+        permutation = list(permutation)
 
     # Conversions:
     s_bin = [int_to_bin(s_j, num_bits(s_j)) for s_j in s]
@@ -97,7 +100,7 @@ def multiple_couriers_planning_sequential(m, n, l, s, D, symmetry_breaking=True,
             clauses.append(conditional_sum_K_bin(a[i], s_bin, courier_loads[i], f"compute_courier_load_{i}"))
             clauses.append(leq(courier_loads[i], l_bin[i]))
 
-        # Constraint 3: every courier has at least 1 item to deliver (implied constraint, because n >= m and distance is quasimetric (from discussion forum))
+        # Constraint 3: every courier has at least 1 item to deliver (implied constraint, because n >= m and distance is quasimetric)
         for i in range(m):
             clauses.append(at_least_one(a[i]))
 
@@ -251,13 +254,21 @@ def multiple_couriers_planning_sequential(m, n, l, s, D, symmetry_breaking=True,
         ans = "UNKNOWN" if solving_time == 300 else "UNSAT"
         return (ans, solving_time, None)
 
+    # reorder all variables w.r.t. the original permutation of load capacities, i.e. of couriers
+    if symmetry_breaking:
+        a_copy = copy.deepcopy(a)
+        r_copy = copy.deepcopy(r)
+        for i in range(m):
+            a[permutation[i]] = a_copy[i]
+            r[permutation[i]] = r_copy[i]
+
     # check that all couriers travel hamiltonian cycles
     R = evaluate(model_routes, r)
     assert(check_all_hamiltonian(R))
 
     T = evaluate(model_routes, t)
     A = evaluate(model_routes, a)
-    
+
     if display_solution:
         Dists = evaluate(model_routes, distances)
         displayMCP(T, Dists, obj_value, A)

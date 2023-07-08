@@ -1,4 +1,5 @@
 import time
+import copy
 
 from z3 import *
 
@@ -9,7 +10,7 @@ from .hamiltonian import *
 from .display import *
 
 
-def multiple_couriers_planning(m, n, l, s, D, symmetry_breaking=True, search='Binary', display_solution=True, timeout_duration=300):
+def multiple_couriers_planning(m, n, l, s, D, symmetry_breaking=True, implied_constraint=True, search='Binary', display_solution=True, timeout_duration=300):
     """Model 1 in Z3 for the Multiple Couriers Planning problem
 
     Args:
@@ -20,6 +21,7 @@ def multiple_couriers_planning(m, n, l, s, D, symmetry_breaking=True, search='Bi
         D (list[list[int]]): (n+1)x(n+1) matrix, with D[i][j] representing the distance from
                              distribution point i to distribution point j
         symmetry_breaking (bool, optional): wether or not to use symmetry breaking constraints (default=True)
+        implied_constraint (bool, optional): wether or not to use implied constraint (default=True)
         search (str, optional) ['Linear', 'Binary']: the search strategy to use in the Optimization phase of solving (default='Binary')
         display_solution (bool, optional): wether or not to print the final solution obtained, with the path travelled by each courier (default=True)
         timeout_duration (int, optional): timeout in seconds (default=300)
@@ -50,8 +52,12 @@ def multiple_couriers_planning(m, n, l, s, D, symmetry_breaking=True, search='Bi
 
     ## CONSTRAINTS
     if symmetry_breaking:
-        # sort the list of loads
-        l.sort(reverse=True)
+        # sort the list of loads, keeping the permutation used for later
+        L = [(l[i], i) for i in range(m)]
+        L.sort(reverse=True)
+        l, permutation = zip(*L)
+        l = list(l)
+        permutation = list(permutation)
 
         ## Symmetry breaking constraint -> after having sorted l above, impose the actually couriers_loads to be sorted decreasingly as well
         solver.add(sort_decreasing(courier_loads))
@@ -78,9 +84,10 @@ def multiple_couriers_planning(m, n, l, s, D, symmetry_breaking=True, search='Bi
         solver.add(conditional_sum_K_bin(a[i], s_bin, courier_loads[i], f"compute_courier_load_{i}"))
         solver.add(leq(courier_loads[i], l_bin[i]))
 
-    # Constraint 3: every courier has at least 1 item to deliver (implied constraint, because n >= m and distance is quasimetric (from discussion forum))
-    for i in range(m):
-        solver.add(at_least_one(a[i]))
+    # Constraint 3: every courier has at least 1 item to deliver (implied constraint, because n >= m and distance is quasimetric)
+    if implied_constraint:
+        for i in range(m):
+            solver.add(at_least_one(a[i]))
 
     # Constraint 4: every object is delivered at some time in its courier's route, and only once
     for i in range(n):
@@ -89,7 +96,9 @@ def multiple_couriers_planning(m, n, l, s, D, symmetry_breaking=True, search='Bi
     # Constraint 5: routes
     for i in range(m):
         # Constraint 5.1: diagonal is full of zeros, i.e. can't leave from j to go to j
-        solver.add(And([Not(r[i][j][j]) for j in range(n+1)]))
+        solver.add(And([Not(r[i][j][j]) for j in range(n)]))
+        if implied_constraint:
+            solver.add(Not(r[i][n][n]))     # don't let courier i have a self loop
 
         # Constraint 5.2: row j has a 1 iff courier i delivers object j
         # rows
@@ -128,7 +137,10 @@ def multiple_couriers_planning(m, n, l, s, D, symmetry_breaking=True, search='Bi
     # Take as upper bound the greater n-(m-1) maximum distances, since that's the maximum items a single courier can be assigned to
     max_distances = [max(D[i]) for i in range(n+1)]
     max_distances.sort()
-    upper_bound = sum(max_distances[m-1:])
+    if implied_constraint:
+        upper_bound = sum(max_distances[m-1:])
+    else:
+        upper_bound = sum(max_distances)
     lower_bound = max([D[n][j] + D[j][n] for j in range(n)])
 
     distances = [[Bool(f"dist_bin_{i}_{k}") for k in range(num_bits(upper_bound))] for i in range(m)]
@@ -231,6 +243,14 @@ def multiple_couriers_planning(m, n, l, s, D, symmetry_breaking=True, search='Bi
     if model is None:
         ans = "UNKNOWN" if solving_time == 300 else "UNSAT"
         return (ans, solving_time, None)
+
+    # reorder all variables w.r.t. the original permutation of load capacities, i.e. of couriers
+    if symmetry_breaking:
+        a_copy = copy.deepcopy(a)
+        r_copy = copy.deepcopy(r)
+        for i in range(m):
+            a[permutation[i]] = a_copy[i]
+            r[permutation[i]] = r_copy[i]
 
     # check that all couriers travel hamiltonian cycles
     R = evaluate(model, r)

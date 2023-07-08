@@ -1,0 +1,20 @@
+{
+    "base": {
+        "time": 6,
+        "optimal": true,
+        "obj": 226,
+        "sol": [[4], [1], [2], [9, 6], [3, 7, 5], [8]]
+    },
+    "sequential": {
+        "time": 1,
+        "optimal": true,
+        "obj": 226,
+        "sol": [[7], [5], [2], [1, 4], [9, 3], [6, 8]]
+    },
+    "sequential_no_sym_break": {
+        "time": 2,
+        "optimal": true,
+        "obj": 226,
+        "sol": [[9], [6], [4, 1], [8], [2], [3, 5, 7]]
+    }
+}
