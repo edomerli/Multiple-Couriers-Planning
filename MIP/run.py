@@ -157,5 +157,7 @@ def run_mip(instance_file):
             sys.stdout = old_stdout
 
         dictionary[model_name] = model_dict
+        print(f"Finished running model {model_name}")
+
 
     return dictionary

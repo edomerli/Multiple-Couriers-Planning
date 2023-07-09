@@ -23,5 +23,7 @@ def run_sat(instance_file):
         model_dict = {"time": solving_time, "optimal": (solving_time < 300), "obj": obj_value, "sol": [] if routes is None else routes}
 
         dictionary[model_name] = model_dict
+        print(f"Finished running model {model_name}")
+
 
     return dictionary

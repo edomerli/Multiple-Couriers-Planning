@@ -31,10 +31,11 @@ def run_smt(instance_file):
     for model_name, model in models:
         sym_break = False if "no_sym_break" in model_name else True
         implied_constr = False if "no_implied" in model_name else True
-        obj_value, solving_time, routes = run_model_on_instance(model, instance_file, symmetry_breaking=sym_break, implied_constraint=implied_constr, timeout_duration=100) #TODO: remove timeout
+        obj_value, solving_time, routes = run_model_on_instance(model, instance_file, symmetry_breaking=sym_break, implied_constraint=implied_constr)
 
         model_dict = {"time": solving_time, "optimal": (solving_time < 300), "obj": obj_value, "sol": [] if routes is None else routes}
 
         dictionary[model_name] = model_dict
+        print(f"Finished running model {model_name}")
 
     return dictionary

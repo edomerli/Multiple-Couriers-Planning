@@ -106,6 +106,8 @@ def run_cp(instance_file):
 
         solution = extract_solution(output.stdout)
         dictionary[model_name] = solution
+        print(f"Finished running model {model_name}")
+
 
     return dictionary
 

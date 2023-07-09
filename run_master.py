@@ -54,6 +54,8 @@ if __name__ == "__main__":
                         "MIP": run_mip}
     
     runner = method_to_runner[solving_method]
+
+    print(f"Starting to run models of method {solving_method}")
     dictionary = runner(filename)
 
     opts = jsbeautifier.default_options()
