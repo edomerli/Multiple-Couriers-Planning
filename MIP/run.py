@@ -10,14 +10,14 @@ from .models import *
 
 solvers = ["highs", "cbc", "gurobi", "cplex"]
 
-models = [("highs", model_complete),
-          ("highs_no_sym_break", model_no_sym_break),
-          ("highs_no_implied", model_no_implied), 
-          ("cbc", model_complete),
-          ("gurobi", model_complete),
-          ("gurobi_no_sym_break", model_no_sym_break),
-          ("gurobi_no_implied", model_no_implied),
-          ("cplex", model_complete)
+models = [ ("highs", model_complete),
+           ("highs_no_sym_break", model_no_sym_break),
+           ("highs_no_implied", model_no_implied), 
+           ("cbc", model_complete),
+           ("gurobi", model_complete),
+           ("gurobi_no_sym_break", model_no_sym_break),
+           ("gurobi_no_implied", model_no_implied),
+           ("cplex", model_complete)
           ]
 
 
@@ -142,7 +142,6 @@ def run_mip(instance_file):
         sym_break = False if "no_sym_break" in model_name else True
         implied_constr = False if "no_implied" in model_name else True
         solver = model_name.split('_')[0]
-        model_dict = run_model_on_instance(model, instance_file, solver, symmetry_breaking=sym_break, implied_constraint=implied_constr)
 
         # suppress solver output
         old_stdout = sys.stdout
