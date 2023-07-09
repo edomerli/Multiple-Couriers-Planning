@@ -1,0 +1,44 @@
+{
+    "base": {
+        "time": 0,
+        "optimal": true,
+        "obj": 12,
+        "sol": [[3, 6, 5], [2, 4], [1, 7]]
+    },
+    "sequential_2solvers": {
+        "time": 0,
+        "optimal": true,
+        "obj": 12,
+        "sol": [[3, 6, 5], [2, 4], [1, 7]]
+    },
+    "sequential_2solvers_no_sym_break": {
+        "time": 0,
+        "optimal": true,
+        "obj": 12,
+        "sol": [[5, 4, 2], [6, 3], [1, 7]]
+    },
+    "sequential_2solvers_no_implied": {
+        "time": 0,
+        "optimal": true,
+        "obj": 12,
+        "sol": [[3, 6, 5], [2, 4], [7, 1]]
+    },
+    "sequential_3solvers": {
+        "time": 1,
+        "optimal": true,
+        "obj": 12,
+        "sol": [[5, 4, 2], [3, 7], [6, 1]]
+    },
+    "sequential_3solvers_no_sym_break": {
+        "time": 1,
+        "optimal": true,
+        "obj": 12,
+        "sol": [[5, 6, 3], [2, 4], [7, 1]]
+    },
+    "sequential_3solvers_no_implied": {
+        "time": 1,
+        "optimal": true,
+        "obj": 12,
+        "sol": [[3, 6, 5], [2, 4], [7, 1]]
+    }
+}
