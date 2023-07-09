@@ -100,7 +100,7 @@ def run_model_on_instance(MCP_model, file, solver, symmetry_breaking=True, impli
         return {"time": time, "optimal": optimal, "obj": "UNSAT", "sol": []}
 
     elif obj_value == 0:    # No solution found, timeout
-        return {"time": time, "optimal": False, "obj": "N/A"}
+        return {"time": 300, "optimal": False, "obj": "N/A"}
 
     # solution
     df = ampl.get_variable("X").get_values().to_list()
