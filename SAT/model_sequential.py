@@ -252,7 +252,7 @@ def multiple_couriers_planning_sequential(m, n, l, s, D, symmetry_breaking=True,
 
     # compute time taken
     end_time = time.time()
-    if end_time > timeout:
+    if end_time >= timeout:
         solving_time = timeout_duration    # solving_time has upper bound of timeout_duration if it timeouts
     else:
         solving_time = math.floor(end_time - encoding_time)
