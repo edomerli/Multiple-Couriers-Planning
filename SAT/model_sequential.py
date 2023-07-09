@@ -253,13 +253,13 @@ def multiple_couriers_planning_sequential(m, n, l, s, D, symmetry_breaking=True,
     # compute time taken
     end_time = time.time()
     if end_time > timeout:
-        solving_time = 300    # solving_time has upper bound of timeout_duration if it timeouts
+        solving_time = timeout_duration    # solving_time has upper bound of timeout_duration if it timeouts
     else:
         solving_time = math.floor(end_time - encoding_time)
 
     # if no model is found -> UNSAT if solved to optimality else UNKKNOWN
     if model_routes is None:
-        ans = "UNKNOWN" if solving_time == 300 else "UNSAT"
+        ans = "UNKNOWN" if solving_time == timeout_duration else "UNSAT"
         return (ans, solving_time, None)
 
     # reorder all variables w.r.t. the original permutation of load capacities, i.e. of couriers
