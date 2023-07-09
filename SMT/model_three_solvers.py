@@ -104,12 +104,14 @@ def SMT_three_solvers(m, n, l, s, D, symmetry_breaking=True, implied_constraint=
 
     lower_bound = max([D[n][j] + D[j][n] for j in ITEMS])
 
-    max_distances = [max(D[i]) for i in range(n+1)]
+    max_distances = [max(D[i][:-1]) for i in range(n)]
     if implied_constraint:
         max_distances.sort()
-        upper_bound = sum(max_distances[m-1:])
+        upper_bound = sum(max_distances[m:]) + max(D[n]) + max(
+            [D[j][n] for j in range(n)])
     else:
-        upper_bound = sum(max_distances)
+        upper_bound = sum(max_distances[1:]) + max(D[n]) + max(
+            [D[j][n] for j in range(n)])
 
     solver.add(obj >= lower_bound)
     solver.add(obj <= upper_bound)
@@ -120,7 +122,7 @@ def SMT_three_solvers(m, n, l, s, D, symmetry_breaking=True, implied_constraint=
 
     model = None
     result_objective = upper_bound
-    
+
     solver_A.set('timeout', millisecs_left(time.time(), timeout))
     while solver_A.check() == sat:
         model_A = solver_A.model()
