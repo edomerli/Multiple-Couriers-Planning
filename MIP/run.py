@@ -67,7 +67,7 @@ def run_model_on_instance(MCP_model, file, solver, symmetry_breaking=True, impli
         # compute the objective value upper bound respectively
         max_distances = [max(D_matrix[i][:-1]) for i in range(n)]
         max_distances.sort()
-        upper_bound = sum(max_distances[m:]) + max(D[n]) + max([D[j][n] for j in range(n)])
+        upper_bound = sum(max_distances[m:]) + max(D_matrix[n]) + max([D_matrix[j][n] for j in range(n)])
         ampl.param["obj_upper_bound"] = upper_bound
 
     # specify the solver to use and set timeout

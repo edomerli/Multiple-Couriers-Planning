@@ -141,7 +141,7 @@ model_no_implied = r"""
     param capacity {COURIERS} > 0 integer;
     param size {ITEMS} > 0 integer;
     param D {D_SIZE, D_SIZE} >= 0 integer; # matrix of distances
-    param obj_upper_bound := sum {i in D_SIZE} (max {j in D_SIZE} D[i,j]);
+    param obj_upper_bound := (sum {i in ITEMS} (max {j in ITEMS} D[i,j])) + (max {i in ITEMS} (D[n+1, i])) + (max {i in ITEMS} (D[i, n+1]));
     param obj_lower_bound := max {i in ITEMS} (D[n+1,i]+D[i,n+1]);
 
 
