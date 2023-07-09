@@ -1,0 +1,44 @@
+{
+    "base": {
+        "time": 0,
+        "optimal": true,
+        "obj": 206,
+        "sol": [[2], [1, 3]]
+    },
+    "base_no_sym_break": {
+        "time": 0,
+        "optimal": true,
+        "obj": 206,
+        "sol": [[2], [1, 3]]
+    },
+    "base_no_implied": {
+        "time": 0,
+        "optimal": true,
+        "obj": 206,
+        "sol": [[2], [1, 3]]
+    },
+    "base_linear": {
+        "time": 0,
+        "optimal": true,
+        "obj": 206,
+        "sol": [[2], [1, 3]]
+    },
+    "sequential": {
+        "time": 0,
+        "optimal": true,
+        "obj": 206,
+        "sol": [[2], [1, 3]]
+    },
+    "sequential_no_sym_break": {
+        "time": 0,
+        "optimal": true,
+        "obj": 206,
+        "sol": [[2], [1, 3]]
+    },
+    "sequential_no_implied": {
+        "time": 0,
+        "optimal": true,
+        "obj": 206,
+        "sol": [[2], [1, 3]]
+    }
+}

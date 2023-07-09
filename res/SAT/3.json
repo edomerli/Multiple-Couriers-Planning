@@ -1,0 +1,44 @@
+{
+    "base": {
+        "time": 0,
+        "optimal": true,
+        "obj": 12,
+        "sol": [[5, 4, 2], [3, 7], [1, 6]]
+    },
+    "base_no_sym_break": {
+        "time": 0,
+        "optimal": true,
+        "obj": 12,
+        "sol": [[5, 4, 2], [3, 7], [6, 1]]
+    },
+    "base_no_implied": {
+        "time": 0,
+        "optimal": true,
+        "obj": 12,
+        "sol": [[5, 6, 3], [2, 4], [7, 1]]
+    },
+    "base_linear": {
+        "time": 0,
+        "optimal": true,
+        "obj": 12,
+        "sol": [[5, 4, 2], [3, 6], [7, 1]]
+    },
+    "sequential": {
+        "time": 0,
+        "optimal": true,
+        "obj": 12,
+        "sol": [[3, 6, 5], [4, 2], [1, 7]]
+    },
+    "sequential_no_sym_break": {
+        "time": 0,
+        "optimal": true,
+        "obj": 12,
+        "sol": [[5, 4, 2], [6, 3], [1, 7]]
+    },
+    "sequential_no_implied": {
+        "time": 0,
+        "optimal": true,
+        "obj": 12,
+        "sol": [[3, 6, 5], [2, 4], [1, 7]]
+    }
+}
