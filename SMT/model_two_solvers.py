@@ -132,7 +132,7 @@ def SMT_two_solvers(m, n, l, s, D, symmetry_breaking=True, implied_constraint=Tr
         model_A = solver_A.model()
         result_A = [ [ model_A.evaluate(A[i][j]) for j in ITEMS ]
             for i in COURIERS ]
-        # print(f"Found A after {(time.time() - start_time - encoding_time):3.3} seconds")
+        # print(f"Found A after {(time.time() - start_time):3.3} seconds")
         solver.push()
         for i in COURIERS:
             for j in ITEMS:
@@ -145,7 +145,7 @@ def SMT_two_solvers(m, n, l, s, D, symmetry_breaking=True, implied_constraint=Tr
             model = solver.model()
             result_objective = model[obj].as_long()
 
-            # print(f"Intermediate objective value: {result_objective} after {(time.time() - start_time - encoding_time):3.3} seconds")
+            # print(f"Intermediate objective value: {result_objective} after {(time.time() - start_time):3.3} seconds")
             solver.add(obj < result_objective)
             if result_objective <= lower_bound:
                 break
@@ -157,6 +157,8 @@ def SMT_two_solvers(m, n, l, s, D, symmetry_breaking=True, implied_constraint=Tr
         solver_A.add(Or([ A[i][j] != result_A[i][j] for j in ITEMS for i in COURIERS ]))
         solver.pop()
         solver.add(obj < result_objective)
+        if result_objective <= lower_bound:
+            break
         now = time.time()
         if now >= timeout:
             break
@@ -164,12 +166,12 @@ def SMT_two_solvers(m, n, l, s, D, symmetry_breaking=True, implied_constraint=Tr
 
     end_time = time.time()
     if end_time > timeout:
-        solving_time = 300    # solving_time has upper bound of timeout_duration if it timeouts
+        solving_time = timeout_duration    # solving_time has upper bound of timeout_duration if it timeouts
     else:
         solving_time = math.floor(end_time - encoding_time)
 
     if model is None:
-        ans = "UNKNOWN" if solving_time == 300 else "UNSAT"
+        ans = "UNKNOWN" if solving_time == timeout_duration else "UNSAT"
         return (ans, solving_time, None)
     
     # reorder all variables w.r.t. the original permutation of load capacities, i.e. of couriers

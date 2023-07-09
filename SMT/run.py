@@ -4,13 +4,13 @@ from .model import *
 from .model_two_solvers import *
 from .model_three_solvers import *
 
-models = [("base", SMT),
-          ("sequential_2solvers", SMT_two_solvers),
-          ("sequential_2solvers_no_sym_break", SMT_two_solvers),
-          ("sequential_2solvers_no_implied", SMT_two_solvers),
-          ("sequential_3solvers", SMT_three_solvers),
-          ("sequential_3solvers_no_sym_break", SMT_three_solvers),
-          ("sequential_3solvers_no_implied", SMT_three_solvers)
+models = [ ("base", SMT),
+           ("sequential_2solvers", SMT_two_solvers),
+           ("sequential_2solvers_no_sym_break", SMT_two_solvers),
+           ("sequential_2solvers_no_implied", SMT_two_solvers),
+           ("sequential_3solvers", SMT_three_solvers),
+           ("sequential_3solvers_no_sym_break", SMT_three_solvers),
+           ("sequential_3solvers_no_implied", SMT_three_solvers)
           ]
 
 
@@ -31,7 +31,7 @@ def run_smt(instance_file):
     for model_name, model in models:
         sym_break = False if "no_sym_break" in model_name else True
         implied_constr = False if "no_implied" in model_name else True
-        obj_value, solving_time, routes = run_model_on_instance(model, instance_file, symmetry_breaking=sym_break, implied_constraint=implied_constr)
+        obj_value, solving_time, routes = run_model_on_instance(model, instance_file, symmetry_breaking=sym_break, implied_constraint=implied_constr, timeout_duration=100) #TODO: remove timeout
 
         model_dict = {"time": solving_time, "optimal": (solving_time < 300), "obj": obj_value, "sol": [] if routes is None else routes}
 

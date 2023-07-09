@@ -128,7 +128,7 @@ def SMT_three_solvers(m, n, l, s, D, symmetry_breaking=True, implied_constraint=
         model_A = solver_A.model()
         result_A = [ [ model_A.evaluate(A[i][j]) for j in ITEMS ]
             for i in COURIERS ]
-        # print(f"Found A after {(time.time() - start_time - encoding_time):.4} seconds")
+        # print(f"Found A after {(time.time() - start_time):.4} seconds")
         solver_O.push()
         solver.push()
         for i in COURIERS:
@@ -142,7 +142,7 @@ def SMT_three_solvers(m, n, l, s, D, symmetry_breaking=True, implied_constraint=
             model_O = solver_O.model()
             result_O = [ [ model_O[O[i][j]].as_long() for j in ITEMS ]
                     for i in COURIERS ]
-            # print(f"Found O after {(time.time() - start_time - encoding_time):.4} seconds")
+            # print(f"Found O after {(time.time() - start_time):.4} seconds")
             solver.push()
             for i in COURIERS:
                 for j in ITEMS:
@@ -154,7 +154,7 @@ def SMT_three_solvers(m, n, l, s, D, symmetry_breaking=True, implied_constraint=
             if solver.check() == sat:
                 model = solver.model()
                 result_objective = model[obj].as_long()
-                # print(f"Intermediate objective value: {result_objective} after {(time.time() - start_time - encoding_time):.4} seconds\n")
+                # print(f"Intermediate objective value: {result_objective} after {(time.time() - start_time):.4} seconds\n")
                 solver.add(obj < result_objective)
             solver_O.add(Or([ O[i][j] != result_O[i][j] for j in ITEMS for i in COURIERS ]))
             solver.pop()
@@ -171,18 +171,20 @@ def SMT_three_solvers(m, n, l, s, D, symmetry_breaking=True, implied_constraint=
         solver.pop()
         solver.add(obj < result_objective)
         now = time.time()
+        if result_objective <= lower_bound:
+            break
         if now >= timeout:
             break
         solver_A.set('timeout', millisecs_left(now, timeout))
 
     end_time = time.time()
     if end_time > timeout:
-        solving_time = 300    # solving_time has upper bound of timeout_duration if it timeouts
+        solving_time = timeout_duration    # solving_time has upper bound of timeout_duration if it timeouts
     else:
         solving_time = math.floor(end_time - encoding_time)
 
     if model is None:
-        ans = "UNKNOWN" if solving_time == 300 else "UNSAT"
+        ans = "UNKNOWN" if solving_time == timeout_duration else "UNSAT"
         return (ans, solving_time, None)
 
     # reorder all variables w.r.t. the original permutation of load capacities, i.e. of couriers

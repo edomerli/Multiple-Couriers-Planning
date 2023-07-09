@@ -122,7 +122,7 @@ def SMT(m, n, l, s, D, symmetry_breaking=True, implied_constraint=True, timeout_
         model = solver.model()
         result_objective = model[obj].as_long()
 
-        # print(f"Intermediate objective value: {result_objective} after {(time.time() - start_time - encoding_time):3.3} seconds")
+        # print(f"Intermediate objective value: {result_objective} after {(time.time() - start_time):3.3} seconds")
         if result_objective <= lower_bound:
             break
 
@@ -137,12 +137,12 @@ def SMT(m, n, l, s, D, symmetry_breaking=True, implied_constraint=True, timeout_
 
     end_time = time.time()
     if end_time > timeout:
-        solving_time = 300    # solving_time has upper bound of timeout_duration if it timeouts
+        solving_time = timeout_duration    # solving_time has upper bound of timeout_duration if it timeouts
     else:
         solving_time = math.floor(end_time - encoding_time)
 
     if model is None:
-        ans = "UNKNOWN" if solving_time == 300 else "UNSAT"
+        ans = "UNKNOWN" if solving_time == timeout_duration else "UNSAT"
         return (ans, solving_time, None)
     
     # reorder all variables w.r.t. the original permutation of load capacities, i.e. of couriers
