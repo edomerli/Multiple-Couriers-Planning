@@ -1,40 +1,35 @@
 {
-    "highs": {
+    "base": {
         "time": 300,
         "optimal": false,
         "obj": "N/A"
     },
-    "highs_no_sym_break": {
+    "sequential_2solvers": {
         "time": 300,
         "optimal": false,
         "obj": "N/A"
     },
-    "highs_no_implied": {
+    "sequential_2solvers_no_sym_break": {
         "time": 300,
         "optimal": false,
         "obj": "N/A"
     },
-    "cbc": {
+    "sequential_2solvers_no_implied": {
         "time": 300,
         "optimal": false,
         "obj": "N/A"
     },
-    "gurobi": {
+    "sequential_3solvers": {
         "time": 300,
         "optimal": false,
         "obj": "N/A"
     },
-    "gurobi_no_sym_break": {
+    "sequential_3solvers_no_sym_break": {
         "time": 300,
         "optimal": false,
         "obj": "N/A"
     },
-    "gurobi_no_implied": {
-        "time": 300,
-        "optimal": false,
-        "obj": "N/A"
-    },
-    "cplex": {
+    "sequential_3solvers_no_implied": {
         "time": 300,
         "optimal": false,
         "obj": "N/A"

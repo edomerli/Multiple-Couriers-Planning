@@ -8,8 +8,8 @@
     "highs_no_sym_break": {
         "time": 0,
         "optimal": true,
-        "obj": "UNSAT",
-        "sol": []
+        "obj": 206,
+        "sol": [[2], [1, 3]]
     },
     "highs_no_implied": {
         "time": 0,
@@ -32,8 +32,8 @@
     "gurobi_no_sym_break": {
         "time": 0,
         "optimal": true,
-        "obj": "UNSAT",
-        "sol": []
+        "obj": 206,
+        "sol": [[2], [1, 3]]
     },
     "gurobi_no_implied": {
         "time": 0,

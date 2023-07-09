@@ -9,7 +9,7 @@
         "time": 0,
         "optimal": true,
         "obj": 12,
-        "sol": [[3, 6, 5], [2, 4], [7, 1]]
+        "sol": [[5, 4, 2], [6, 3], [7, 1]]
     },
     "highs_no_implied": {
         "time": 0,
@@ -33,7 +33,7 @@
         "time": 0,
         "optimal": true,
         "obj": 12,
-        "sol": [[3, 6, 5], [2, 4], [1, 7]]
+        "sol": [[3, 6, 5], [4, 2], [7, 1]]
     },
     "gurobi_no_implied": {
         "time": 0,

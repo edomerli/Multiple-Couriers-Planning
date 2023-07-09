@@ -2,26 +2,22 @@
     "base": {
         "time": 300,
         "optimal": false,
-        "obj": "UNKNOWN",
-        "sol": []
+        "obj": "N/A"
     },
     "sequential_2solvers": {
         "time": 300,
         "optimal": false,
-        "obj": "UNKNOWN",
-        "sol": []
+        "obj": "N/A"
     },
     "sequential_2solvers_no_sym_break": {
         "time": 300,
         "optimal": false,
-        "obj": "UNKNOWN",
-        "sol": []
+        "obj": "N/A"
     },
     "sequential_2solvers_no_implied": {
         "time": 300,
         "optimal": false,
-        "obj": "UNKNOWN",
-        "sol": []
+        "obj": "N/A"
     },
     "sequential_3solvers": {
         "time": 300,

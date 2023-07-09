@@ -1,4 +1,24 @@
 {
+    "highs": {
+        "time": 300,
+        "optimal": false,
+        "obj": "N/A"
+    },
+    "highs_no_sym_break": {
+        "time": 300,
+        "optimal": false,
+        "obj": "N/A"
+    },
+    "highs_no_implied": {
+        "time": 300,
+        "optimal": false,
+        "obj": "N/A"
+    },
+    "cbc": {
+        "time": 300,
+        "optimal": false,
+        "obj": "N/A"
+    },
     "gurobi": {
         "time": 300,
         "optimal": false,
@@ -10,6 +30,11 @@
         "obj": "N/A"
     },
     "gurobi_no_implied": {
+        "time": 300,
+        "optimal": false,
+        "obj": "N/A"
+    },
+    "cplex": {
         "time": 300,
         "optimal": false,
         "obj": "N/A"

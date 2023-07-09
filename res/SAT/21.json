@@ -1,40 +1,35 @@
 {
-    "highs": {
+    "base": {
         "time": 300,
         "optimal": false,
         "obj": "N/A"
     },
-    "highs_no_sym_break": {
+    "base_no_sym_break": {
         "time": 300,
         "optimal": false,
         "obj": "N/A"
     },
-    "highs_no_implied": {
+    "base_no_implied": {
         "time": 300,
         "optimal": false,
         "obj": "N/A"
     },
-    "cbc": {
+    "base_linear": {
         "time": 300,
         "optimal": false,
         "obj": "N/A"
     },
-    "gurobi": {
+    "sequential": {
         "time": 300,
         "optimal": false,
         "obj": "N/A"
     },
-    "gurobi_no_sym_break": {
+    "sequential_no_sym_break": {
         "time": 300,
         "optimal": false,
         "obj": "N/A"
     },
-    "gurobi_no_implied": {
-        "time": 300,
-        "optimal": false,
-        "obj": "N/A"
-    },
-    "cplex": {
+    "sequential_no_implied": {
         "time": 300,
         "optimal": false,
         "obj": "N/A"
