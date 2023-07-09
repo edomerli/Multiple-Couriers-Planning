@@ -259,7 +259,7 @@ def multiple_couriers_planning_sequential(m, n, l, s, D, symmetry_breaking=True,
 
     # if no model is found -> UNSAT if solved to optimality else UNKKNOWN
     if model_routes is None:
-        ans = "UNKNOWN" if solving_time == timeout_duration else "UNSAT"
+        ans = "N/A" if solving_time == timeout_duration else "UNSAT"
         return (ans, solving_time, None)
 
     # reorder all variables w.r.t. the original permutation of load capacities, i.e. of couriers

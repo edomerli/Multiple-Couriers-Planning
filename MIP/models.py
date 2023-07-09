@@ -122,10 +122,6 @@ model_no_sym_break = r"""
     # each courier transports at least one item, so don't enable self loops with origin
     s.t. implied_constraint {i in COURIERS}:
         X[i,n+1,n+1] = 0; 
-    
-    ## symmetry breaking with ordered capacity 
-    s.t. symmetry_breaking {i in {1..m-1}}:
-        sum {j in ITEMS, k in ITEMS} X[i,j,k]*size[k] >= sum {j in ITEMS, k in ITEMS} X[i+1,j,k]*size[k]; # the load of each courier is ordered as the capacity       
 """
 
 model_no_implied = r"""

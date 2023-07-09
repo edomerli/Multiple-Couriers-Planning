@@ -171,7 +171,7 @@ def SMT_two_solvers(m, n, l, s, D, symmetry_breaking=True, implied_constraint=Tr
         solving_time = math.floor(end_time - encoding_time)
 
     if model is None:
-        ans = "UNKNOWN" if solving_time == timeout_duration else "UNSAT"
+        ans = "N/A" if solving_time == timeout_duration else "UNSAT"
         return (ans, solving_time, None)
     
     # reorder all variables w.r.t. the original permutation of load capacities, i.e. of couriers
