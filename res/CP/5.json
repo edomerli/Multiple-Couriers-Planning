@@ -1,0 +1,26 @@
+{
+    "Gecode_no_LNS": {
+        "time": 0,
+        "optimal": true,
+        "obj": 206,
+        "sol": [[2], [1, 3]]
+    },
+    "Gecode_no_LNS_no_sym_break": {
+        "time": 0,
+        "optimal": true,
+        "obj": 206,
+        "sol": [[2], [1, 3]]
+    },
+    "Gecode_no_LNS_no_implied": {
+        "time": 0,
+        "optimal": true,
+        "obj": 206,
+        "sol": [[2], [1, 3]]
+    },
+    "Chuffed": {
+        "time": 0,
+        "optimal": true,
+        "obj": 206,
+        "sol": [[2], [1, 3]]
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "Gecode_no_LNS": {
+        "time": 300,
+        "optimal": false,
+        "obj": "N/A"
+    },
+    "Gecode_LNS": {
+        "time": 300,
+        "optimal": false,
+        "obj": "N/A"
+    },
+    "Gecode_LNS_no_sym_break": {
+        "time": 300,
+        "optimal": false,
+        "obj": "N/A"
+    },
+    "Gecode_LNS_no_implied": {
+        "time": 300,
+        "optimal": false,
+        "obj": "N/A"
+    },
+    "Chuffed": {
+        "time": 300,
+        "optimal": false,
+        "obj": "N/A"
+    }
+}
