@@ -89,7 +89,10 @@ def SMT_three_solvers(m, n, l, s, D, symmetry_breaking=True, implied_constraint=
         ])
         dist_expr += Sum([If(order_items[j0] == 1, D[n][j0], 0) for j0 in ITEMS])
         dist_expr += Sum([If(order_items[jn] == counts[i], D[jn][n], 0) for jn in ITEMS])
-        solver.add(dist[i] == dist_expr)
+        if implied_constraint:
+            solver.add(dist[i] == dist_expr)
+        else:
+            solver.add(dist[i] == If(counts[i] > 0, dist_expr, 0))
 
     #------------------------------------------------------------------------------
     # Objective
@@ -201,3 +204,23 @@ def SMT_three_solvers(m, n, l, s, D, symmetry_breaking=True, implied_constraint=
     deliveries = retrieve_routes(result_O)
 
     return (result_objective, solving_time, deliveries)
+
+    # # TODO: remove, debug
+    # distanze = []
+    # conti = []
+    # result_A = [ [ model[A[i][j]] for j in ITEMS ]
+    #         for i in COURIERS ]
+    # for i in COURIERS:
+    #     distanze.append(model[dist[i]].as_long())
+    #     conti.append(model[counts[i]].as_long())
+    #     print(model.eval(Sum([If(A[i][j], 1, 0) for j in ITEMS])))
+    #     print(model.eval(counts[i] == Sum([If(A[i][j], 1, 0) for j in ITEMS])))
+    # print(distanze)
+    # print(conti)
+    # print(f"Maximum distance is {max(distanze)}")
+    # print(f"Objective value is {result_objective}")
+    # print(f"Objective value is {model[obj].as_long()}")
+    # print("A: ")
+    # print(result_A)
+    # print("O:")
+    # print(result_O)

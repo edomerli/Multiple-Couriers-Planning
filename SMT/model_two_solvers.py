@@ -95,7 +95,10 @@ def SMT_two_solvers(m, n, l, s, D, symmetry_breaking=True, implied_constraint=Tr
         ])
         dist_expr += Sum([If(order_items[j0] == 1, D[n][j0], 0) for j0 in ITEMS])
         dist_expr += Sum([If(order_items[jn] == counts[i], D[jn][n], 0) for jn in ITEMS])
-        solver.add(dist[i] == dist_expr)
+        if implied_constraint:
+            solver.add(dist[i] == dist_expr)
+        else:
+            solver.add(dist[i] == If(counts[i] > 0, dist_expr, 0))
 
     #------------------------------------------------------------------------------
     # Objective
