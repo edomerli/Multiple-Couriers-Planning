@@ -110,5 +110,3 @@ def run_cp(instance_file):
 
 
     return dictionary
-
-        
